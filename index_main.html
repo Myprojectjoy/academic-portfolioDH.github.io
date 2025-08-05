@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debapriya Hazra - Academic Website</title>
+    <meta name="description" content="Academic portfolio of Debapriya Hazra, showcasing research in Machine learning.">
+    <link rel="icon" href="images/favicon.ico" type="images/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="images/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="images/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-foreground: #ffffff;
+            --secondary: #f1f5f9;
+            --secondary-foreground: #0f172a;
+            --muted: #f8fafc;
+            --muted-foreground: #64748b;
+            --accent: #10b981;
+            --accent-foreground: #ffffff;
+            --destructive: #ef4444;
+            --destructive-foreground: #ffffff;
+            --border: #e2e8f0;
+            --input: #e2e8f0;
+            --ring: #3b82f6;
+            --background: #ffffff;
+            --foreground: #0f172a;
+            --card: #ffffff;
+            --card-foreground: #0f172a;
+            --popover: #ffffff;
+            --popover-foreground: #0f172a;
+        }
+
+        .dark {
+            --primary: #3b82f6;
+            --primary-foreground: #ffffff;
+            --secondary: #1e293b;
+            --secondary-foreground: #f8fafc;
+            --muted: #1e293b;
+            --muted-foreground: #94a3b8;
+            --accent: #10b981;
+            --accent-foreground: #ffffff;
+            --destructive: #7f1d1d;
+            --destructive-foreground: #ffffff;
+            --border: #1e293b;
+            --input: #1e293b;
+            --ring: #1e293b;
+            --background: #020617;
+            --foreground: #f8fafc;
+            --card: #020617;
+            --card-foreground: #f8fafc;
+            --popover: #020617;
+            --popover-foreground: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: var(--foreground);
+            background-color: var(--background);
+            scroll-behavior: smooth;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding: 0 1rem;
+        }
+
+        .accordion-content.expanded {
+            max-height: 1000px;
+            padding: 1rem;
+            transition: max-height 0.3s ease-in, padding 0.3s ease-in;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary);
+            color: var(--primary-foreground);
+            border: none;
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-toggle {
+            background: var(--secondary);
+            color: var(--secondary-foreground);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--muted);
+        }
+
+        .profile-image {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .profile-image {
+                width: 128px;
+                height: 128px;
+            }
+        }
+
+        /* Sticky Profile Summary */
+        #sticky-profile.visible {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            transform: translateY(0);
+        }
+
+        #sticky-profile {
+            transform: translateY(-10px);
+        }
+
+        @media (max-width: 768px) {
+            #sticky-profile {
+                right: 1rem;
+                width: 16rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-slate-800 min-h-screen">
+    <!-- Header/Navigation -->
+    <nav class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-semibold text-slate-800">Debapriya Hazra</h1>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="hidden md:flex space-x-6">
+                        <button onclick="scrollToSection('profile')"
+                            class="text-slate-500 hover:text-blue-600 transition-colors">Profile</button>
+                        <button onclick="scrollToSection('research')"
+                            class="text-slate-500 hover:text-blue-600 transition-colors">Research</button>
+                        <button onclick="scrollToSection('teaching')"
+                            class="text-slate-500 hover:text-blue-600 transition-colors">Teaching</button>
+                        <button onclick="scrollToSection('publications')"
+                            class="text-slate-500 hover:text-blue-600 transition-colors">Publications</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        <!-- Profile Section -->
+        <section id="profile" class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="p-8">
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-8">
+                    <div class="flex-shrink-0">
+                        <img src="images/my_photo.jpg" alt="Debapriya Hazra" class="profile-image">
+                    </div>
+
+                    <div class="flex-1">
+                        <h1 class="text-3xl md:text-4xl font-bold text-slate-800 mb-2">Debapriya Hazra</h1>
+                        <p class="text-lg text-slate-500 mb-1">Assistant Professor at Montclair State University</p>
+                        <p class="text-sm text-slate-500 mb-4">1 Normal Avenue Montclair, NJ, USA 07043</p>
+
+
+                        <!-- Contact Information -->
+                        <div class="space-y-2 mb-6">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="mail" class="w-4 h-4 text-slate-500"></i>
+                                <a href="mailto:hazrad@montclair.edu"
+                                    class="text-blue-600 hover:text-blue-700 transition-colors">hazrad@montclair.edu</a>
+                            </div>
+                        </div>
+
+                        <!-- Social Links -->
+                        <div class="flex flex-wrap gap-4">
+                            <a href="https://scholar.google.com/citations?user=2RLv37MAAAAJ&hl=en&authuser=2"
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                                <span class="text-sm font-medium">Google Scholar</span>
+                            </a>
+                            <a href="https://orcid.org/0000-0002-9660-4700"
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors">
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                                <span class="text-sm font-medium">ORCID</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/debapriya-hazra-26525294/"
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                                <span class="text-sm font-medium">LinkedIn</span>
+                            </a>
+                            <a href="#"
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-slate-50 text-slate-500 rounded-lg hover:bg-slate-100 transition-colors">
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                                <span class="text-sm font-medium">University</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Biography Section -->
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200">
+            <div class="p-8">
+                <h2 class="text-2xl font-semibold text-slate-800 mb-6">Biography</h2>
+                <div class="prose prose-slate max-w-none">
+                    <p class="text-base leading-relaxed text-slate-500">
+                        I did my Ph.D. in Machine Learning Lab at Jeju National University, South Korea. After pursuing
+                        master’s in Computer Application,
+                        I worked as a software engineer at Atos Global IT Solutions and Services Pvt. Ltd. in India and
+                        Germany. I obtained bachelor’s degree in Computer Science Honors from Calcutta University,
+                        India.
+                        My specialization is in generating synthetic data using generative adversarial networks (GAN)
+                        and enhancing classification or prediction accuracy for disease diagnosis.
+                        During my Ph.D. studies, I have worked with biomedical signals, microbiomes, microscopic cell
+                        images, nucleic acid sequences and also with data from other domains.
+                    </p>
+                    <p class="text-base leading-relaxed text-slate-500 mt-4">
+                        I am currently an Assistant Professor at Montclair State University, School of Computing,
+                        College of Science and Mathematics, with a strong commitment to both research excellence and
+                        education, Dr. Hazra actively supervises under graduate students and contributes to the academic
+                        community through peer review, conference organization, and collaborative research initiatives.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Interests Section -->
+        <section id="research" class="bg-white rounded-xl shadow-sm border border-slate-200">
+            <div class="p-8">
+                <h2 class="text-2xl font-semibold text-slate-800 mb-6">Research Interests</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+                            <div>
+                                <h3 class="font-medium text-slate-800">Machine Learning</h3>
+                                <p class="text-sm text-slate-500 mt-1">Machine learning machine learning analysis of
+                                    biomedical data with a focus on generative and predictive modeling.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+                            <div>
+                                <h3 class="font-medium text-slate-800">Diffusion Model</h3>
+                                <p class="text-sm text-slate-500 mt-1">Diffusion models to generate synthetic medical
+                                    images.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+                            <div>
+                                <h3 class="font-medium text-slate-800">Machine Learning Analysis of Biomedical Data</h3>
+                                <p class="text-sm text-slate-500 mt-1">Generative and
+                                    Predictive Modeling</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+                            <div>
+                                <h3 class="font-medium text-slate-800">Deep Learning-based Imaging Analysis</h3>
+                                <p class="text-sm text-slate-500 mt-1">Precision Medicine</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Activities & Responsibilities Section -->
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200">
+            <div class="p-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-semibold text-slate-800">Activities</h2>
+                </div>
+
+                <div class="accordion-section border border-slate-200 rounded-lg">
+                    <button
+                        class="accordion-header w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                        onclick="toggleAccordion(this)">
+                        <h3 class="text-lg font-medium text-slate-800">Responsibilities</h3>
+                        <i data-lucide="plus" class="w-5 h-5 text-slate-500 transition-transform accordion-icon"></i>
+                    </button>
+                    <div class="accordion-content border-t border-slate-200">
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="graduation-cap" class="w-5 h-5 text-blue-600"></i>
+                                <span class="text-slate-500">Mentoring research tech and graduate students.</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="graduation-cap" class="w-5 h-5 text-blue-500"></i>
+                                <span class="text-slate-500">Supervising under graduate studentsL</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="file-text" class="w-5 h-5 text-green-600"></i>
+                                <span class="text-slate-500">Peer review for top-tier journal papers in AI and
+                                    Medical doamin</span>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="users" class="w-5 h-5 text-purple-500"></i>
+                                <span class="text-slate-500">Conference organization and academic event planning</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="handshake" class="w-5 h-5 text-green-500"></i>
+                                <span class="text-slate-500">Industry collaboration and technology transfer
+                                    initiatives</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Teaching Section -->
+        <section id="teaching" class="bg-white rounded-xl shadow-sm border border-slate-200">
+            <div class="p-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-semibold text-slate-800">Teaching</h2>
+                </div>
+
+                <div class="accordion-section border border-slate-200 rounded-lg">
+                    <button
+                        class="accordion-header w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                        onclick="toggleAccordion(this)">
+                        <h3 class="text-lg font-medium text-slate-800">Subjects</h3>
+                        <i data-lucide="plus" class="w-5 h-5 text-slate-500 transition-transform accordion-icon"></i>
+                    </button>
+                    <div class="accordion-content border-t border-slate-200">
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-blue-800 pl-4">
+                                <h4 class="font-medium text-slate-800">Artificial Intelligence </h4>
+                                <p class="text-sm text-slate-500 mt-1">Fall 2025 • Instructor • Under Graduate Level</p>
+                                <p class="text-sm text-slate-600 mt-2"> Fundamental of AI</p>
+                            </div>
+                            <div class="border-l-4 border-blue-600 pl-4">
+                                <h4 class="font-medium text-slate-800">Machine Learning Fundamentals</h4>
+                                <p class="text-sm text-slate-500 mt-1">Spring 2025 • Co-Instructor • Undergraduate Level
+                                </p>
+                                <p class="text-sm text-slate-600 mt-2">Introduction to supervised and unsupervised
+                                    learning, neural networks, and practical applications.</p>
+                            </div>
+                            <div class="border-l-4 border-blue-400 pl-4">
+                                <h4 class="font-medium text-slate-800">Computer Vision Applications</h4>
+                                <p class="text-sm text-slate-500 mt-1">Fall 2023 • Teaching Assistant • Graduate Level
+                                </p>
+                                <p class="text-sm text-slate-600 mt-2">Advanced topics in image processing, object
+                                    detection, and video analysis.</p>
+                            </div>
+                            <div class="border-l-4 border-blue-200 pl-4">
+                                <h4 class="font-medium text-slate-800">Research Methodology</h4>
+                                <p class="text-sm text-slate-500 mt-1">Spring 2023 • Guest Lecturer • Graduate Level</p>
+                                <p class="text-sm text-slate-600 mt-2">Scientific writing, experimental design, and data
+                                    analysis techniques.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CV Section -->
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200">
+            <div class="p-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-semibold text-slate-800">CV</h2>
+                    <a href="documents/Debapriya_Hazra_CV.pdf" download="Debapriya_Hazra_CV.pdf"
+                        class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                        <span class="text-sm font-medium">Download PDF</span>
+                    </a>
+                </div>
+
+                <div class="accordion-section border border-slate-200 rounded-lg mb-4">
+                    <button
+                        class="accordion-header w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                        onclick="toggleAccordion(this)">
+                        <h3 class="text-lg font-medium text-slate-800">Education</h3>
+                        <i data-lucide="plus" class="w-5 h-5 text-slate-500 transition-transform accordion-icon"></i>
+                    </button>
+                    <div class="accordion-content border-t border-slate-200">
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-blue-800 pl-4">
+                                <h4 class="font-semibold text-slate-800">Doctor of Philosophy (Ph.D.) in Machine
+                                    learning</h4>
+                                <p class="text-slate-500">Jeju National University • 2019-2022</p>
+                                <p class="text-sm text-slate-600 mt-1"><strong>Dissertation:</strong> "Few-Shot Image
+                                    Generation and Novel Deep Learning Model for Enhancing Classification of Microscopic
+                                    Single-Cell Images Obtained from Peripheral Blood Smears"</p>
+                                <p class="text-sm text-slate-600"><strong>GPA:</strong> 4.38 / 4.50
+                                <p class="text-sm text-slate-600"><strong>Advisor:</strong> Prof. Yung-Cheol Byun •
+                                    <strong>Award:</strong> Excellent Academic Achievement Award
+                                </p>
+                            </div>
+                            <div class="border-l-4 border-blue-600 pl-4">
+                                <h4 class="font-semibold text-slate-800">Master of Computer Application (MCA) in
+                                    Computer Apllication</h4>
+                                <p class="text-slate-500">Rcc Institute of Information Technology • 2012-2015</p>
+                                <p class="text-sm text-slate-600 mt-1"><strong>Project:</strong> e-Auction</p>
+                                <p class="text-sm text-slate-600"><strong>GPA:</strong> 8.59 / 10
+
+                                </p>
+                            </div>
+                            <div class="border-l-4 border-blue-400 pl-4">
+                                <h4 class="font-semibold text-slate-800">Bachelor of Science ( B.Sc ) in Computer
+                                    Science Honours</h4>
+                                <p class="text-slate-500">Seth Anandaram Jaipuria College • 2009-2012</p>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="accordion-section border border-slate-200 rounded-lg">
+                    <button
+                        class="accordion-header w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                        onclick="toggleAccordion(this)">
+                        <h3 class="text-lg font-medium text-slate-800">Professional Experience</h3>
+                        <i data-lucide="plus" class="w-5 h-5 text-slate-500 transition-transform accordion-icon"></i>
+                    </button>
+                    <div class="accordion-content border-t border-slate-200">
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-blue-800 pl-4">
+                                <h4 class="font-semibold text-slate-800">Postdoctoral Associate, McGowan Institute for
+                                    Regenerative Medicine</h4>
+                                <p class="text-slate-500">University of Pittsburgh • Feb 2024 - Apr 2025</p>
+                                <p class="text-sm text-slate-600 mt-1"><strong>Department:</strong> Department of
+                                    Surgery (Dr Deeptankar DeMazumder Lab)</p>
+                                <p class="text-sm text-slate-600"><strong>Research:</strong> Worked on Personalized
+                                    Dynamic ECG Signal Analysis for
+                                    Predicting Emergent Arrythmias and Spontaneous Sudden Cardiac Arrest
+                                <p class="text-sm text-slate-600"><strong>Responsibilities/ Tasks:</strong> Mentoring
+                                    research tech and graduate students</p>
+                            </div>
+                            <div class="border-l-4 border-blue-600 pl-4">
+                                <h4 class="font-semibold text-slate-800">Postdoctoral Fellow, Stanford University,
+                                    School of Medicine</h4>
+                                <p class="text-slate-500">Stanford University • Sept 2022 – Feb 2024</p>
+                                <p class="text-sm text-slate-600 mt-1"><strong>Department:</strong> Anesthesiology,
+                                    Perioperative and Pain Medicine (AI in Medicine / Aghaeepour Laboratory)</p>
+                                <p class="text-sm text-slate-600"><strong>Research:</strong> Worked on Machine Learning
+                                    Analysis of Biomedical Data (EHR). Mainly focused on Generative and
+                                    Predictive Modeling</p>
+                                <p class="text-sm text-slate-600">Deep Learning-based Imaging Analysis of Metabolomics
+                                    Dataset for Precision Medicine
+                                </p>
+                            </div>
+                            <div class="border-l-4 border-blue-400 pl-4">
+                                <h4 class="font-semibold text-slate-800">Researcher, Jeju National University, Machine
+                                    Learning Lab</h4>
+                                <p class="text-slate-500">Jeju National University • Mar 2019 – Aug 2022</p>
+                                <p class="text-sm text-slate-600"><strong>Research:</strong> Worked on biomedical
+                                    signals, microbiomes, microscopic cell images, and nucleic acid sequences</p>
+                                <p class="text-sm text-slate-600">Image classification, time-series data analysis,
+                                    object & edge detection, image segmentation, image background recovery, ensemble
+                                    models.
+                                </p>
+                            </div>
+                            <div class="border-l-4 border-blue-200 pl-4">
+                                <h4 class="font-semibold text-slate-800">Software Engineer, Atos Global IT Solutions and
+                                    Services Private Limited, India</h4>
+                                <p class="text-slate-500">Atos Global IT Solutions and
+                                    Services Private Limited • June 2015 – Feb 2019</p>
+                                <p class="text-sm text-slate-600"><strong>Project - E-Plus:</strong> Mobile
+                                    telecommunications operator in Germany. With more than 25 million subscribers, E-
+                                    Plus is the third largest mobile operator in Germany</p>
+                                <p class="text-sm text-slate-600"><strong>Project - Telefonica:</strong> Spanish
+                                    multinational broadband and telecommunications provider with operations in
+                                    Europe, Asia, and North, Central and South America. It is one of the largest
+                                    telephone operators and Mobile network providers in the world</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Publications Section -->
+        <section id="publications" class="bg-white rounded-xl shadow-sm border border-slate-200">
+            <div class="p-8">
+                <h2 class="text-2xl font-semibold text-slate-800 mb-6">Publications</h2>
+
+                <!-- 2025 Publications -->
+                <div class="accordion-section border border-slate-200 rounded-lg mb-4">
+                    <button
+                        class="accordion-header w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                        onclick="toggleAccordion(this)">
+                        <h3 class="text-lg font-medium text-slate-800">2025</h3>
+                        <i data-lucide="plus" class="w-5 h-5 text-slate-500 transition-transform accordion-icon"></i>
+                    </button>
+                    <div class="accordion-content border-t border-slate-200">
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-blue-800 pl-4">
+                                <h4 class="font-medium text-slate-800">GAN-based synthetic time-series data generation
+                                    for improving prediction of demand for electric vehicles</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>Expert Systems with Applications</strong>
+                                    • S. Chatterjee,
+                                    D Hazra, YC Byun</p>
+                                <div class="flex gap-3 mt-2">
+                                    <a href="#"
+                                        class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded hover:bg-blue-100">DOI:
+                                        10.1016/j.eswa.2024.125838</a>
+                                    <a href="https://doi.org/10.1016/j.eswa.2024.125838"
+                                        class="text-xs bg-slate-50 text-slate-500 px-2 py-1 rounded hover:bg-slate-100">PDF</a>
+                                </div>
+                            </div>
+                            <div class="border-l-4 border-blue-600 pl-4">
+                                <h4 class="font-medium text-slate-800">Enhancing Lung Disease Identification Through
+                                    Methods Ensemble Learning</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>Data-Driven Decision Support System in
+                                        Intelligent HealthCare</strong> • D Hazra, D Bhattacharyya, H Liu</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2024 Publications -->
+                <div class="accordion-section border border-slate-200 rounded-lg mb-4">
+                    <button
+                        class="accordion-header w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                        onclick="toggleAccordion(this)">
+                        <h3 class="text-lg font-medium text-slate-800">2024</h3>
+                        <i data-lucide="plus" class="w-5 h-5 text-slate-500 transition-transform accordion-icon"></i>
+                    </button>
+                    <div class="accordion-content border-t border-slate-200">
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-blue-800 pl-4">
+                                <h4 class="font-medium text-slate-800">Automated Personalized Modulation of the
+                                    Sympathetic “fight-or-flight” Reflex In Vivo Using Implantable Microdevices for
+                                    Enhancing Neurocardiac Function and Reducing Mortality Risk</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>American Heart Association (2024
+                                        Scientific Session)</strong> • D. Kundu et al</p>
+                            </div>
+                            <!-- 2024 Publications 2 -->
+                            <div class="border-l-4 border-blue-700 pl-4">
+                                <h4 class="font-medium text-slate-800">Autonomous Personalized Dynamic ECG Analysis
+                                    Predicts 1-hour Incidence of Sudden Cardiac Arrest</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>American Heart Association (2024
+                                        Scientific Session)</strong> • D. Hazra et al</p>
+                            </div>
+                            <!-- 2024 Publications 3 -->
+                            <div class="border-l-4 border-blue-600 pl-4">
+                                <h4 class="font-medium text-slate-800">AIntelligent implantable microdevices for
+                                    continuous monitoring and automated neurophotonic optogenetic modulation of
+                                    autonomic function enhances cardiac function and reduces risk of cardiovascular
+                                    death</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>High-Risk, High-Reward Research
+                                        Symposium</strong> • D. Kundu et al</p>
+                            </div>
+                            <!-- 2024 Publications 4 -->
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-medium text-slate-800">Single-cell peripheral immunoprofiling of lewy
+                                    body and Parkinson’s disease in a multi-site cohort</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>Molecular neurodegeneration</strong> • T.
+                                    Phongpreecha et al.</p>
+                                <div class="flex gap-3 mt-2">
+                                    <a href="#"
+                                        class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded hover:bg-blue-100">DOI:
+                                        10.1186/s13024-024-00748-2</a>
+                                    <a href="https://doi.org/10.1186/s13024-024-00748-2"
+                                        class="text-xs bg-slate-50 text-slate-500 px-2 py-1 rounded hover:bg-slate-100">PDF</a>
+                                </div>
+                            </div>
+                            <!-- 2024 Publication 5 -->
+                            <div class="border-l-4 border-blue-400 pl-4">
+                                <h4 class="font-medium text-slate-800">60 Predicting chorioamnionitis using AI-based
+                                    methods: a retrospective cohort study</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>American Journal of Obstetrics &
+                                        Gynecology</strong> • A.R Waldrop et al.</p>
+                            </div>
+                            <!-- 2024 Publication 6 -->
+                            <div class="border-l-4 border-blue-300 pl-4">
+                                <h4 class="font-medium text-slate-800">Single-cell peripheral immunoprofiling of lewy
+                                    body and Parkinson’s disease in a multi-site cohort</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>Molecular neurodegeneration</strong> • T.
+                                    Phongpreecha et al.</p>
+                                <div class="flex gap-3 mt-2">
+                                    <a href="#"
+                                        class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded hover:bg-blue-100">DOI:
+                                        10.1186/s13024-024-00748-2</a>
+                                    <a href="https://doi.org/10.1186/s13024-024-00748-2"
+                                        class="text-xs bg-slate-50 text-slate-500 px-2 py-1 rounded hover:bg-slate-100">PDF</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 2022 Publications -->
+                <div class="accordion-section border border-slate-200 rounded-lg mb-4">
+                    <button
+                        class="accordion-header w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                        onclick="toggleAccordion(this)">
+                        <h3 class="text-lg font-medium text-slate-800">2022</h3>
+                        <i data-lucide="plus" class="w-5 h-5 text-slate-500 transition-transform accordion-icon"></i>
+                    </button>
+                    <div class="accordion-content border-t border-slate-200">
+                        <div class="space-y-4">
+
+                            <!-- 2022 Publication 1 -->
+                            <div class="border-l-4 border-blue-800 pl-4">
+                                <h4 class="font-medium text-slate-800">Enhancing Classification of Cells Procured from
+                                    Bone Marrow Aspirate Smears Using Generative Adversarial Networks and Sequential
+                                    Convolutional Neural Network
+                                </h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>Computer Methods and Programs in
+                                        Biomedicine</strong>
+                                    • D. Hazra et al</p>
+                                <div class="flex gap-3 mt-2">
+                                    <a href="#"
+                                        class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded hover:bg-blue-100">DOI:
+                                        10.1109/TSG.2023.001</a>
+                                    <a href="#"
+                                        class="text-xs bg-slate-50 text-slate-500 px-2 py-1 rounded hover:bg-slate-100">PDF</a>
+                                </div>
+                            </div>
+                            <!-- 2022 Publication 2 -->
+                            <div class="border-l-4 border-blue-700 pl-4">
+                                <h4 class="font-medium text-slate-800">IncepX-Ensemble: Performance Enhancement Based on
+                                    Data Augmentation and Hybrid Learning for Recycling Transparent PET Bottles</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>IEEE Access</strong> • S. Chatterjee et
+                                    al.</p>
+                                <div class="flex gap-3 mt-2">
+                                    <a href="#"
+                                        class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded hover:bg-blue-100">DOI:
+                                        10.1021/acs.est.2023.004</a>
+                                    <a href="#"
+                                        class="text-xs bg-slate-50 text-slate-500 px-2 py-1 rounded hover:bg-slate-100">PDF</a>
+                                </div>
+                            </div>
+                            <!-- 2022 Publications 3 -->
+                            <div class="border-l-4 border-blue-600 pl-4">
+                                <h4 class="font-medium text-slate-800">Enhancement of Image Classification Using
+                                    Transfer Learning and GAN-Based Synthetic Data Augmentation</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>Mathematics</strong> • S. Chatterjee et
+                                    al.</p>
+                                <div class="flex gap-3 mt-2">
+                                    <a href="#"
+                                        class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded hover:bg-blue-100">DOI:
+                                        10.1186/s13024-024-00748-2</a>
+                                    <a href="https://doi.org/10.1186/s13024-024-00748-2"
+                                        class="text-xs bg-slate-50 text-slate-500 px-2 py-1 rounded hover:bg-slate-100">PDF</a>
+                                </div>
+                            </div>
+                            <!-- 2022 Publications 4 -->
+                            <div class="border-l-4 border-blue-600 pl-4">
+                                <h4 class="font-medium text-slate-800">Generative Adversarial Networks for Creating
+                                    Synthetic Nucleic Acid Sequence of Cat Genome</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>International Journal of Molecular
+                                        Sciences</strong> • D. Hazra et al.</p>
+                                <div class="flex gap-3 mt-2">
+                                    <a href="#"
+                                        class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded hover:bg-blue-100">DOI:
+                                        10.1186/s13024-024-00748-2</a>
+                                    <a href="https://doi.org/10.1186/s13024-024-00748-2"
+                                        class="text-xs bg-slate-50 text-slate-500 px-2 py-1 rounded hover:bg-slate-100">PDF</a>
+                                </div>
+                            </div>
+                            <!-- 2022 Publications 5 -->
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-medium text-slate-800">Synthesis of Microscopic Cell Images Obtained
+                                    from Bone Marrow Aspirate Smears through Generative Adversarial Networks</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>Biology</strong> • D. Hazra et al.</p>
+                                <div class="flex gap-3 mt-2">
+                                    <a href="#"
+                                        class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded hover:bg-blue-100">DOI:
+                                        10.1186/s13024-024-00748-2</a>
+                                    <a href="https://doi.org/10.1186/s13024-024-00748-2"
+                                        class="text-xs bg-slate-50 text-slate-500 px-2 py-1 rounded hover:bg-slate-100">PDF</a>
+                                </div>
+                            </div>
+                            <!-- 2022 Publications 6 -->
+                            <div class="border-l-4 border-blue-400 pl-4">
+                                <h4 class="font-medium text-slate-800">Generating Synthetic Data to Reduce Prediction
+                                    Error of Energy Consumption</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>Computers, Materials & Continua</strong>
+                                    • D. Hazra et al.</p>
+                                <div class="flex gap-3 mt-2">
+                                    <a href="#"
+                                        class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded hover:bg-blue-100">DOI:
+                                        10.1186/s13024-024-00748-2</a>
+                                    <a href="https://doi.org/10.1186/s13024-024-00748-2"
+                                        class="text-xs bg-slate-50 text-slate-500 px-2 py-1 rounded hover:bg-slate-100">PDF</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 2021 Publications -->
+                <div class="accordion-section border border-slate-200 rounded-lg mb-4">
+                    <button
+                        class="accordion-header w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                        onclick="toggleAccordion(this)">
+                        <h3 class="text-lg font-medium text-slate-800">2021</h3>
+                        <i data-lucide="plus" class="w-5 h-5 text-slate-500 transition-transform accordion-icon"></i>
+                    </button>
+                    <div class="accordion-content border-t border-slate-200">
+                        <div class="space-y-4">
+
+                            <!-- 2021 Publications 1 -->
+                            <div class="border-l-4 border-blue-800 pl-4">
+                                <h4 class="font-medium text-slate-800">Distributed Learning for Smart Grid Optimization
+                                </h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>IEEE Transactions on Smart Grid</strong>
+                                    • S. Chatterjee, H. Kim, J. Miller</p>
+                                <div class="flex gap-3 mt-2">
+                                    <a href="#"
+                                        class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded hover:bg-blue-100">DOI:
+                                        10.1109/TSG.2023.001</a>
+                                    <a href="#"
+                                        class="text-xs bg-slate-50 text-slate-500 px-2 py-1 rounded hover:bg-slate-100">PDF</a>
+                                </div>
+                            </div>
+                            <!-- 2021 Publications 2 -->
+                            <div class="border-l-4 border-blue-700 pl-4">
+                                <h4 class="font-medium text-slate-800">Computer Vision Techniques for Environmental
+                                    Monitoring</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>Environmental Science &
+                                        Technology</strong> • S. Chatterjee, Q. Chen, R. Davis</p>
+                                <div class="flex gap-3 mt-2">
+                                    <a href="#"
+                                        class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded hover:bg-blue-100">DOI:
+                                        10.1021/acs.est.2023.004</a>
+                                    <a href="#"
+                                        class="text-xs bg-slate-50 text-slate-500 px-2 py-1 rounded hover:bg-slate-100">PDF</a>
+                                </div>
+                            </div>
+                            <!-- 2021 Publications 3 -->
+                            <div class="border-l-4 border-blue-600 pl-4">
+                                <h4 class="font-medium text-slate-800">Computer Vision Techniques for Environmental
+                                    Monitoring</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>Environmental Science &
+                                        Technology</strong> • S. Chatterjee, Q. Chen, R. Davis</p>
+                                <div class="flex gap-3 mt-2">
+                                    <a href="#"
+                                        class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded hover:bg-blue-100">DOI:
+                                        10.1021/acs.est.2023.004</a>
+                                    <a href="#"
+                                        class="text-xs bg-slate-50 text-slate-500 px-2 py-1 rounded hover:bg-slate-100">PDF</a>
+                                </div>
+                            </div>
+                            <!-- 2021 Publications 4 -->
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-medium text-slate-800">Computer Vision Techniques for Environmental
+                                    Monitoring</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>Environmental Science &
+                                        Technology</strong> • S. Chatterjee, Q. Chen, R. Davis</p>
+                                <div class="flex gap-3 mt-2">
+                                    <a href="#"
+                                        class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded hover:bg-blue-100">DOI:
+                                        10.1021/acs.est.2023.004</a>
+                                    <a href="#"
+                                        class="text-xs bg-slate-50 text-slate-500 px-2 py-1 rounded hover:bg-slate-100">PDF</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2020 Publications -->
+                <div class="accordion-section border border-slate-200 rounded-lg">
+                    <button
+                        class="accordion-header w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                        onclick="toggleAccordion(this)">
+                        <h3 class="text-lg font-medium text-slate-800">2020</h3>
+                        <i data-lucide="plus" class="w-5 h-5 text-slate-500 transition-transform accordion-icon"></i>
+                    </button>
+                    <div class="accordion-content border-t border-slate-200">
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-blue-800 pl-4">
+                                <h4 class="font-medium text-slate-800">Machine Learning for Predictive Analytics in
+                                    Renewable Energy Systems</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>Journal of Sustainable Energy</strong> •
+                                    S. Chatterjee, A. Kumar, M. Patel</p>
+                                <div class="flex gap-3 mt-2">
+                                    <a href="#"
+                                        class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded hover:bg-blue-100">DOI:
+                                        10.1016/j.jse.2020.001</a>
+                                    <a href="#"
+                                        class="text-xs bg-slate-50 text-slate-500 px-2 py-1 rounded hover:bg-slate-100">PDF</a>
+                                </div>
+                            </div>
+                            <div class="border-l-4 border-blue-700 pl-4">
+                                <h4 class="font-medium text-slate-800">Deep Learning Approaches for Wind Turbine Fault
+                                    Detection</h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>IEEE Transactions on Industrial
+                                        Electronics</strong> • S. Chatterjee, B. Singh, L. Wang</p>
+                                <div class="flex gap-3 mt-2">
+                                    <a href="#"
+                                        class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded hover:bg-blue-100">DOI:
+                                        10.1109/TIE.2020.002</a>
+                                    <a href="#"
+                                        class="text-xs bg-slate-50 text-slate-500 px-2 py-1 rounded hover:bg-slate-100">PDF</a>
+                                </div>
+                            </div>
+                            <div class="border-l-4 border-blue-600 pl-4">
+                                <h4 class="font-medium text-slate-800">Computer Vision for Smart Manufacturing: A Review
+                                </h4>
+                                <p class="text-sm text-slate-500 mt-1"><strong>Manufacturing Science and
+                                        Engineering</strong> • S. Chatterjee, J. Thompson, K. Lee</p>
+                                <div class="flex gap-3 mt-2">
+                                    <a href="#"
+                                        class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded hover:bg-blue-100">DOI:
+                                        10.1016/j.mse.2020.003</a>
+                                    <a href="#"
+                                        class="text-xs bg-slate-50 text-slate-500 px-2 py-1 rounded hover:bg-slate-100">PDF</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Sticky Profile Summary (appears when scrolling) -->
+    <div id="sticky-profile"
+        class="fixed top-20 right-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-slate-200 dark:border-gray-700 p-4 w-72 opacity-0 pointer-events-none transition-all duration-300 z-40">
+        <div class="flex items-center gap-3 mb-3">
+            <img src="images/my_photo.jpg" alt="Debapriya Hazra"
+                class="w-12 h-12 rounded-full object-cover border-2 border-slate-100">
+            <div>
+                <h3 class="font-semibold text-slate-800 dark:text-white text-sm">Debapriya Hazra</h3>
+                <p class="text-xs text-slate-500 dark:text-gray-400">Assistant Professor at Montclair State University
+                </p>
+            </div>
+        </div>
+
+        <div class="space-y-2">
+            <a href="mailto:hazrad@montclair.edu"
+                class="flex items-center gap-2 text-xs text-blue-600 hover:text-blue-700 transition-colors">
+                <i data-lucide="mail" class="w-3 h-3"></i>
+                <span>hazrad@montclair.edu</span>
+            </a>
+
+            <div class="flex gap-2">
+                <a href="https://scholar.google.com/citations?user=2RLv37MAAAAJ&hl=en&authuser=2"
+                    class="flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-600 rounded text-xs hover:bg-blue-100 transition-colors">
+                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                    <span>Scholar</span>
+                </a>
+                <a href="https://orcid.org/0000-0002-9660-4700"
+                    class="flex items-center gap-1 px-2 py-1 bg-green-50 text-green-600 rounded text-xs hover:bg-green-100 transition-colors">
+                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                    <span>ORCID</span>
+                </a>
+                <a href="https://www.linkedin.com/in/debapriya-hazra-26525294/"
+                    class="flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-600 rounded text-xs hover:bg-blue-100 transition-colors">
+                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+
+            <button onclick="scrollToTop()"
+                class="w-full flex items-center justify-center gap-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-slate-700 dark:text-gray-300 rounded text-xs transition-colors">
+                <i data-lucide="arrow-up" class="w-3 h-3"></i>
+                <span>Back to Top</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-to-top" class="scroll-to-top" onclick="scrollToTop()">
+        <i data-lucide="arrow-up" class="w-5 h-5"></i>
+    </button>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Scroll to section function
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Accordion toggle function
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('.accordion-icon');
+            const isExpanded = content.classList.contains('expanded');
+
+            if (isExpanded) {
+                content.classList.remove('expanded');
+                icon.setAttribute('data-lucide', 'plus');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.add('expanded');
+                icon.setAttribute('data-lucide', 'minus');
+                icon.style.transform = 'rotate(180deg)';
+            }
+
+            // Re-render icons
+            lucide.createIcons();
+        }
+
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Sticky Profile Summary + Scroll to Top
+        const stickyProfile = document.getElementById('sticky-profile');
+        let profileSectionBottom = 0;
+
+        window.addEventListener('load', function () {
+            const profileSection = document.getElementById('profile');
+            if (profileSection) {
+                profileSectionBottom = profileSection.offsetTop + profileSection.offsetHeight;
+            }
+        });
+
+        window.addEventListener('scroll', function () {
+            const scrollButton = document.getElementById('scroll-to-top');
+            const currentScroll = window.pageYOffset;
+
+            // Scroll-to-top button
+            if (currentScroll > 300) {
+                scrollButton.classList.add('visible');
+            } else {
+                scrollButton.classList.remove('visible');
+            }
+
+            // Sticky profile - show when past profile section
+            if (currentScroll > profileSectionBottom + 100) {
+                stickyProfile.classList.add('visible');
+            } else {
+                stickyProfile.classList.remove('visible');
+            }
+        });
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        let isDark = false;
+
+        themeToggle.addEventListener('click', function () {
+            isDark = !isDark;
+
+            if (isDark) {
+                body.classList.add('dark');
+                body.style.backgroundColor = '#020617';
+                body.style.color = '#f8fafc';
+                themeToggle.innerHTML = '<i data-lucide="moon" class="w-4 h-4"></i>';
+            } else {
+                body.classList.remove('dark');
+                body.style.backgroundColor = '#f8fafc';
+                body.style.color = '#0f172a';
+                themeToggle.innerHTML = '<i data-lucide="sun" class="w-4 h-4"></i>';
+            }
+
+            // Re-render icons
+            lucide.createIcons();
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+
+</html>
